@@ -47,14 +47,12 @@ Việt để huấn luyện và 100 cặp để kiểm tra.
 2. Chọn GPU: **Thời gian chạy → Thay đổi loại thời gian chạy → T4 GPU → Lưu**.
 3. Chạy các cell đầu tiên (phần cài đặt). Chúng đặt cấu hình (cell đầu tiên, gọi là **cell cài đặt**), cài thư
    viện, tạo thư mục làm việc `/content/lab22` và ghi các file mã nguồn của lab vào đó. Bạn không cần tải repo về.
-4. Chạy lần lượt các cell **từ trên xuống**, không bỏ cell nào. Phần bắt buộc kết thúc ở **NB4**; các phần sau là bonus.
+4. Chạy lần lượt các cell **từ trên xuống** (hoặc chọn **Chạy tất cả**). Bản T4 chỉ gồm NB0–NB4 bắt buộc và cell tải bằng chứng; các phần bonus có trong bản BigGPU và mã nguồn `notebooks/`.
    Nếu gặp lỗi không có GPU, quay lại bước 2.
 
-> **Quan trọng — Colab xoá mọi file khi hết phiên.** Trước khi đóng tab hoặc hết giờ GPU, mở bảng **Tệp**
-> (biểu tượng thư mục bên trái), vào `/content/lab22` và tải về máy:
-> - thư mục `submission/screenshots/` (các ảnh biểu đồ),
-> - thư mục `data/eval/` (kết quả chấm),
-> - các file `.json` trong `adapters/dpo/` (số liệu huấn luyện; **không** cần tải file trọng số `.safetensors`).
+> **Quan trọng — Colab xoá mọi file khi hết phiên.** Chạy cell cuối để tải `Lab22_evidence.zip`
+> (ảnh, dữ liệu preference, kết quả đánh giá, cấu hình adapter và mô hình; không gồm trọng số `.safetensors`).
+> Tải thêm notebook đã chạy bằng **Tệp → Tải xuống → Tải .ipynb xuống** để giữ output.
 >
 > Nếu mất phiên giữa chừng, bạn phải chạy lại từ NB1.
 

@@ -33,12 +33,14 @@ TARGETS = {"T4": "Lab22_DPO_T4.ipynb", "BIGGPU": "Lab22_DPO_BigGPU.ipynb"}
 CELL = re.compile(r"^# %%(?P<md> \[markdown\])?.*$", re.MULTILINE)
 
 
-def requirements() -> list[str]:
+def requirements(include_bonus: bool = False) -> list[str]:
     """Requirement specs from requirements.txt, minus test/notebook tooling."""
     # The core Colab path ends at NB4. These packages are only needed by
     # optional deployment/benchmark notebooks and can fail or take a long
     # time to build on a free T4 runtime.
-    skip = ("jupyterlab", "jupytext", "pytest", "llama-cpp-python", "lm-eval")
+    skip = ("jupyterlab", "jupytext", "pytest")
+    if not include_bonus:
+        skip += ("llama-cpp-python", "lm-eval")
     specs = []
     for line in (REPO / "requirements.txt").read_text(encoding="utf-8").splitlines():
         spec = line.split("#", 1)[0].strip()
@@ -99,7 +101,7 @@ RELEASE_GPU = (
 def render(tier: str) -> dict:
     big = tier == "BIGGPU"
     stages = STAGES if big else [stage for stage in STAGES if stage[1].startswith("core")]
-    pins = " ".join(f'"{s}"' for s in requirements())
+    pins = " ".join(f'"{s}"' for s in requirements(include_bonus=big))
     cells = [
         md(
             f"# Lab 22 — DPO/ORPO Alignment ({'BigGPU' if big else 'T4'} tier)\n\n"
