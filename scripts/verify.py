@@ -58,10 +58,13 @@ def check_dpo(problems: list[str], warnings: list[str]) -> None:
         return
     base = str((read_json(adapter / "adapter_config.json", problems) or {}).get("base_model_name_or_path", ""))
     expected = (REPO / "models" / "sft-merged").resolve()
-    if not base or Path(base).resolve() != expected:
+    # Colab artifacts retain their /content/lab22 absolute training path.
+    # A portable submission must still prove the adapter targets this SFT model.
+    actual = Path(base.replace("\\", "/"))
+    if not base or tuple(actual.parts[-2:]) != ("models", "sft-merged"):
         problems.append(
             f"WRONG REF  adapters/dpo was trained on {base!r}, not {rel(expected)}: the DPO reference "
-            "must be this repo's SFT model (if the repo moved, rerun NB3 here)."
+            "must be the SFT model produced by NB1."
         )
     sys.path.insert(0, str(REPO))
     from lab22.data import split_mismatch

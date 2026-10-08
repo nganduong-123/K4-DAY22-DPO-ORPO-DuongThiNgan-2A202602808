@@ -98,6 +98,7 @@ RELEASE_GPU = (
 
 def render(tier: str) -> dict:
     big = tier == "BIGGPU"
+    stages = STAGES if big else [stage for stage in STAGES if stage[1].startswith("core")]
     pins = " ".join(f'"{s}"' for s in requirements())
     cells = [
         md(
@@ -132,12 +133,28 @@ def render(tier: str) -> dict:
     for module in sorted((REPO / "lab22").glob("*.py")):
         body = module.read_text(encoding="utf-8")
         cells.append(code(f"%%writefile {WORKDIR}/lab22/{module.name}\n{body}"))
-    for i, (stem, kind) in enumerate(STAGES):
+    for i, (stem, kind) in enumerate(stages):
         if i:
             # One Colab kernel runs every stage, so drop the previous stage's GPU objects.
             cells.append(code(RELEASE_GPU))
         cells.append(md(f"---\n# ⏵ `notebooks/{stem}.py` ({kind})"))
         cells.extend(percent_cells(REPO / "notebooks" / f"{stem}.py"))
+    if not big:
+        cells.extend([
+            md("## B. Tải bằng chứng để nộp\n\nSau khi NB4 hoàn tất, cell này gói các ảnh và số liệu nhỏ. Tải cả notebook đã chạy từ menu **Tệp → Tải xuống → Tải .ipynb xuống**."),
+            code(
+                "from pathlib import Path\n"
+                "from zipfile import ZipFile, ZIP_DEFLATED\n"
+                "evidence = Path('/content/Lab22_evidence.zip')\n"
+                "with ZipFile(evidence, 'w', ZIP_DEFLATED) as archive:\n"
+                "    for pattern in ('submission/screenshots/*.png', 'adapters/*/*.json', 'models/sft-merged/config.json', 'data/pref/*.parquet', 'data/eval/*.json', 'data/eval/*.jsonl'):\n"
+                "        for item in sorted(WORK.glob(pattern)):\n"
+                "            archive.write(item, item.relative_to(WORK))\n"
+                "print(f'Evidence: {evidence} ({evidence.stat().st_size / 1048576:.1f} MB)')\n"
+                "from google.colab import files\n"
+                "files.download(str(evidence))"
+            ),
+        ])
     return {
         "cells": cells,
         "metadata": {
