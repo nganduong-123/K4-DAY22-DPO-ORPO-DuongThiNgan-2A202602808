@@ -35,7 +35,10 @@ CELL = re.compile(r"^# %%(?P<md> \[markdown\])?.*$", re.MULTILINE)
 
 def requirements() -> list[str]:
     """Requirement specs from requirements.txt, minus test/notebook tooling."""
-    skip = ("jupyterlab", "jupytext", "pytest")
+    # The core Colab path ends at NB4. These packages are only needed by
+    # optional deployment/benchmark notebooks and can fail or take a long
+    # time to build on a free T4 runtime.
+    skip = ("jupyterlab", "jupytext", "pytest", "llama-cpp-python", "lm-eval")
     specs = []
     for line in (REPO / "requirements.txt").read_text(encoding="utf-8").splitlines():
         spec = line.split("#", 1)[0].strip()

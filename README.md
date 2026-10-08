@@ -1,5 +1,7 @@
 # Ngày 22 — Lab căn chỉnh mô hình bằng DPO/ORPO (Track 3)
 
+**Bài thực hành của Dương Thị Ngân · 2A202602808.** Dựa trên [repo lab của VinUni AI20k](https://github.com/VinUni-AI20k/K4-L3-Track3-Day22-DPO-ORPO-Alignment). Kết quả thực nghiệm và bài phản tư nằm trong `submission/`.
+
 Lab cho học phần **AICB-P2T3 · Ngày 22 · DPO/ORPO Alignment — từ SFT đến học theo sở thích**.
 
 > Bản K4 cập nhật tháng 10/2026 (xem [`CHANGELOG.md`](CHANGELOG.md)). Mọi thời gian trong tài liệu này là
