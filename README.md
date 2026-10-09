@@ -4,6 +4,8 @@
 
 Lab cho học phần **AICB-P2T3 · Ngày 22 · DPO/ORPO Alignment — từ SFT đến học theo sở thích**.
 
+**Bài đã chạy (T4, 08–09/10/2026):** NB0–NB4 hoàn tất trong [notebook có output](submission/Lab22_DPO_T4_executed.ipynb). DPO đạt reward accuracy held-out 67% và margin +0,0797 trên 100 cặp; khi sinh đáp án cho 50 câu held-out, SFT+DPO thắng 7, SFT thắng 7, hòa 36 (win rate 50%, CI 95% [43%; 57%]). Kết quả **chưa chứng minh DPO tốt hơn SFT**. Giám khảo Qwen3 trượt sanity tiếng Việt (8/12) nên kết quả chính dùng Llama (12/12). Bốn ảnh, JSON/Parquet và phân tích hạn chế nằm trong [submission/REFLECTION.md](submission/REFLECTION.md). Các phần ORPO/GRPO/benchmark là bonus, chưa chạy.
+
 > Bản K4 cập nhật tháng 10/2026 (xem [`CHANGELOG.md`](CHANGELOG.md)). Mọi thời gian trong tài liệu này là
 > ước tính trên Colab T4 miễn phí; máy của bạn có thể nhanh hoặc chậm hơn.
 
